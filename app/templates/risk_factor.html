@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <style>
+body {
+    text-align: center;
+}
+form {
+    display: inline-block;
+}
+</style>
+</head>
+
+    <h1>Risk factors:</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.wbc.label }}<br>
+            {{ form.wbc(size=10) }}<br>
+            {% for error in form.wbc.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% if current_day==8%}
+        <p>
+            {{ form.prednisolone.label }}<br>
+            {{ form.prednisolone(size=10) }}<br>
+            {% for error in form.prednisolone.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        <p>
+            {{ form.tbd.label }}<br>
+            {{ form.tbd(size=10) }}<br>
+            {% for error in form.tbd.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hrcyto.label }}<br>
+            {{ form.hrcyto(size=10) }}<br>
+            {% for error in form.hrcyto.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.cns.label }}<br>
+            {{ form.cns(size=10) }}<br>
+            {% for error in form.cns.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.acf.label }}<br>
+            {{ form.acf(size=10) }}<br>
+            {% for error in form.acf.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% if current_day==8 or current_day==35%}
+        <p>
+            {{ form.mrd.label }}<br>
+            {{ form.mrd(size=10) }}<br>
+            {% for error in form.mrd.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.cr.label }}<br>
+            {{ form.cr(size=10) }}<br>
+            {% for error in form.cr.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

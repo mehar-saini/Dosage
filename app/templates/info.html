@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Patient: {{ patient.name }} </h2>
+    <h4>Age: {{ patient.age }} Medical Record Number: {{ patient.mrn }} Risk Type: {{risk_factor.risk_type}}</a></h4>
+    <hr>
+    <h5>BMI: {{ patient.bmi }}</h5>
+    <h5>BSA: {{ patient.bsa }}</h5>
+    <h5>Prednisolone dose: {{ patient.d_prednisolone }} mg (po) in 3 divided doses</h5>
+    <h5>Vincristine dose: {{ patient.d_vincristine }} mg (slow i.v. push)</h5>
+    <h5>Daunorubicin dose: {{ patient.d_daunorubicin }} mg (i.v. infusion over one hour)</h5>
+    <h5>Methotrexate dose: {{ patient.d_methotrexate }} mg (intrathecal)</h5>
+    <h5>Ecoli_Asparginase dose: {{ patient.d_ecoli }} units (i.m.)</h5>
+    <h5>Pegaspargase dose: {{ patient.d_pegaspargase }} units (i.m.)</h5>
+    <h5>Cotrimoxazole dose: {{ patient.d_cotrimoxazole }} mg (twice a day)</h5>
+    <hr>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <h1>Dosage Chart for {{ patient.name }}</h1>
+    <hr>
+    {% if risk_factor.risk_type=='STANDARD' %}
+
+    {% if (current_time-patient.timestamp).days>=0 and (current_time-patient.timestamp).days<36 %}
+    <h3> Standard Risk, Induction Phase </h3>
+    <h3> SR-R1A </h3>
+    <img src="https://drive.google.com/uc?export=view&id=14bnr3l53yzTxxygCRqZnCboMape_A6is" alt="">
+    <h6>Prednisolone: given in three divided doses</h6>
+    <h6>Vincristine: maximum single dose of Vincristine is 2mg</h6>
+    <h6>Intrathecal Methotrexate: <2 years= 8mg; 2-Less than 3 years= 10mg; ≥3 years= 12mg</h6>
+    {% elif (current_time-patient.timestamp).days>35 and (current_time-patient.timestamp).days<57 %}
+    <h3> Standard Risk, Consolidation Phase </h3>
+    <p>print sr-cp</p>
+    <h6>Mercaptopurine: 60mg/m2/day once in the evening</h6>
+    {% elif (current_time-patient.timestamp).days>56 and (current_time-patient.timestamp).days<120 %}
+    <h3> Standard Risk, Interim Maintenance </h3>
+    <p>print sr-im</p>
+    <<h6>Oral Methotrexate: 20mg/m2 given weekly except on week of intrathecal Methotrexate</h6>
+    {% elif (current_time-patient.timestamp).days>119 and (current_time-patient.timestamp).days<169 %}
+    <h3> Standard Risk, Delayed Intensification Phase </h3>
+    <h3> SR-R2A </h3>
+    <p>print sr-dip</p>
+    {% else %}
+    <h3> Standard Risk, Maintenance </h3>
+    <p> print sr-m </p>
+    <<h6>Please note there are 8 such cycles of therapy to end on week 120.</h6>
+    {% endif %}
+
+    {% elif risk_factor.risk_type=='INTERMEDIATE' %}
+
+    {% if (current_time-patient.timestamp).days>=0 and (current_time-patient.timestamp).days<36 and patient.age<10 %}
+    <h3> Intermediate Risk, Induction Phase </h3>
+    <h3> IR-R1A </h3>
+    <p>print IR-R1A</p>
+    <h6>Prednisolone: given in three divided doses</<h6>
+    <h6>Vincristine: maximum single dose of Vincristine is 2mg</h6>
+    <h6>Intrathecal Methotrexate: <2 years= 8mg; 2 years-Less than 3 years = 10mg; ≥3 years= 12mg</h6>
+    {% elif (current_time-patient.timestamp).days>0 and (current_time-patient.timestamp).days<36 and patient.age>9 %}
+    <h3> Intermediate Risk, Induction Phase </h3>
+    <h3> IR-R1A </h3>
+    <p>print IR-R1A for adoloscents</p>
+    <h6> Prednisolone: given in three divided doses, Days 1-7 max dose of 120 mg Days 8-14 and Days 22-28 max dose of 80 mg</h6>
+    <h6>Vincristine: maximum single dose of Vincristine is 2mg</h6>
+    <h6>Intrathecal Methotrexate: <2 years= 8mg; 2 years- Less than 3 years= 10mg; ≥3 years= 12mg</h6>
+    {% elif (current_time-patient.timestamp).days>35 and (current_time-patient.timestamp).days<57 %}
+    <h3> Intermediate Risk, Consolidation Phase </h3>
+    <p>print ir-cp</p>
+    <h6>Mercaptopurine: 60mg/m2/day once at night</h6>
+    {% elif (current_time-patient.timestamp).days>56 and (current_time-patient.timestamp).days<120 %}
+    <h3> Intermediate Risk, Interim Maintenance </h3>
+    <p>print sr-im</p>
+    <h6>IV Methotrexate: 100mg/m2 given as initial dose on day 2</h6>
+    <h6>Escalate subsequent doses by 50mg/m2 to toxicity and modify dosage on following days </h6>
+    {% elif (current_time-patient.timestamp).days>119 and (current_time-patient.timestamp).days<169 %}
+    <h3> Intermediate Risk, Delayed Intensification Phase </h3>
+    <h3> IR-R2A </h3>
+    <p>print sr-dip</p>
+    {% else %}
+    <h3> Intermediate Risk, Maintenance </h3>
+    <p> print ir-m</p>
+    <h6>Please note there are 8 such cycles of therapy to end on week 121</h6>
+    {% endif %}
+
+    {% else %}
+
+    {% if (current_time-patient.timestamp).days>=0 and (current_time-patient.timestamp).days<36 and patient.age<10 %}
+    <h3> High Risk, Induction Phase </h3>
+    <p>print hr-ip </p>
+    <h6>Prednisolone: given in three divided doses</h6>
+    <h6>Vincristine: maximum single dose of Vincristine is 2mg</h6>
+    <h6>Intrathecal Methotrexate: <2 years= 8mg; 2 years-Less than 3 years= 10mg; ≥3 years= 12mg</h6>
+    <h6>MRD estimation on Day 35</h6>
+    {% elif (current_time-patient.timestamp).days>35 and (current_time-patient.timestamp).days<99 %}
+    <h3> High Risk, Augmented BFM consolidation </h3>
+    <p>print hr-bfm </p>
+    <h6>Mercaptopurine: 60mg/m2/day once at night</h6>
+    {% elif (current_time-patient.timestamp).days>98 and (current_time-patient.timestamp).days<155 %}
+    <h3> High Risk Interim Maintenance Phase, HDMTX </h3>
+    <p>print hr-hdmtx</p>
+    {% elif (current_time-patient.timestamp).days>154 and (current_time-patient.timestamp).days<204 %}
+    <h3> High Risk, Delayed Intensification Phase </h3>
+    <h3> HR-R2A </h3>
+    <p>print hr-dip</p>
+    <h6>Intensification - All Regimens NOTE THIS PHASE RANDOMISES BETWEEN DAUNORUBICIN AND MITOXANTRONE</h6>
+    {% else %}
+    <h3> High Risk, Maintenance </h3>
+    <p> print hr-m</p>
+    <h6>Please note there are 8 such cycles of therapy to end on week 125</h6>
+    {% endif %}
+
+    {% endif %}
+
+{% endblock %}

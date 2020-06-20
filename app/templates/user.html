@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <h1>User: {{ username }}</h1>
+    {% if len>0: %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Medical Record no.</th>
+                <th scope="col">Day</th>
+                <th scope="col">Add/Edit Risk factors</th>
+                <th scope="col">Dosage Chart and Risk Type</th>
+            </tr>
+        </thead>
+    {% for i in range(0, len)  %}
+    <tbody>
+        <tr>
+            <th scope="row">{{i+1}}</th>
+            <td>{{ patients[i].name }}</td>
+            <td>{{ patients[i].mrn }}</td>
+            <td>{{(current_time-patients[i].timestamp).days}}</td>
+
+    <td> <a href="{{ url_for('edit', username=username, name=patients[i].name) }}">Add/Edit Risk factors</a> </td>
+
+    <td> <a  href="{{ url_for('info', username=username, name=patients[i].name) }}">Dosage Chart and Risk Type</a> </td>
+
+    {% endfor %}
+    {% endif %}
+    <hr>
+    <a type="button" class="nav-link button" href="{{ url_for('add', username=username) }}">Add a new Patient</a>
+    <hr>
+</div>
+
+{% endblock %}
